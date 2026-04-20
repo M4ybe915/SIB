@@ -1,0 +1,36 @@
+﻿@page
+@model sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo.CreateModel
+
+<h2>Nuevo Préstamo</h2>
+
+<form method="post">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label>Usuario</label>
+        <select asp-for="Prestamo.IdUsuario" class="form-control">
+            <option value="">-- Seleccione --</option>
+            @foreach (var u in Model.Usuarios)
+            {
+                <option value="@u.IdUsuario">@u.Nombre</option>
+            }
+        </select>
+        <span asp-validation-for="Prestamo.IdUsuario" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Libro</label>
+        <select asp-for="Prestamo.IdLibro" class="form-control">
+            <option value="">-- Seleccione --</option>
+            @foreach (var l in Model.Libros)
+            {
+                <option value="@l.IdLibro">@l.Titulo</option>
+            }
+        </select>
+        <span asp-validation-for="Prestamo.IdLibro" class="text-danger"></span>
+    </div>
+
+    <button class="btn btn-primary">Registrar</button>
+
+</form>

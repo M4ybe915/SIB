@@ -1,0 +1,25 @@
+﻿@page
+@model sistema_de_informacion_bibliotecaria_sib.Pages.Usuario.IndexModel
+
+<h2>Usuarios</h2>
+
+<a href="/Usuario/Create" class="btn btn-success mb-3">Agregar Usuario</a>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+    </tr>
+
+    @foreach (var u in Model.Usuarios)
+    {
+        <tr>
+            <td>@u.IdUsuario</td>
+            <td>@u.Nombre @u.Apellido</td>
+            <td>
+                <a href="/Usuario/Edit?id=@u.IdUsuario" class="btn btn-warning btn-sm">Editar</a>
+            </td>
+        </tr>
+    }
+</table>

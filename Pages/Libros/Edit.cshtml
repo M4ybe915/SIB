@@ -1,0 +1,25 @@
+﻿@page
+@model sistema_de_informacion_bibliotecaria_sib.Pages.Libros.EditModel
+
+<h2>Editar Libro</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Libro.IdLibro" />
+
+    <div class="mb-3">
+        <label>Título</label>
+        <input asp-for="Libro.Titulo" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Autor</label>
+        <input asp-for="Libro.Autor" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Cantidad</label>
+        <input asp-for="Libro.Cantidad" type="number" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Actualizar</button>
+</form>

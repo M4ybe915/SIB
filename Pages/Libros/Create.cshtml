@@ -1,0 +1,30 @@
+﻿@page
+@model sistema_de_informacion_bibliotecaria_sib.Pages.Libros.CreateModel
+
+<h2>Agregar Libro</h2>
+
+<form method="post">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label>Título</label>
+        <input asp-for="Libro.Titulo" class="form-control" />
+        <span asp-validation-for="Libro.Titulo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Autor</label>
+        <input asp-for="Libro.Autor" class="form-control" />
+        <span asp-validation-for="Libro.Autor" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Cantidad</label>
+        <input asp-for="Libro.Cantidad" type="number" class="form-control" />
+        <span asp-validation-for="Libro.Cantidad" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+
+</form>

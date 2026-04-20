@@ -1,38 +1,77 @@
 ﻿@page
 @model IndexModel
 
-<h2 class="mb-4">Panel de Control</h2>
+<nav class="navbar navbar-light bg-white border-bottom px-4 mb-4">
+    <span class="navbar-brand fw-bold">Biblioteca SIB</span>
 
-<div class="row">
-
-    <div class="col-md-4">
-        <div class="card dashboard-card">
-            <h5>📚 Libros</h5>
-            <p>Gestión de libros</p>
-            <a href="/Libros/Create" class="btn btn-primary mb-3">
-                LIbros
-            </a>
-        </div>
+    <div>
+        <a class="nav-link d-inline text-dark me-3" href="/Libros">Libros</a>
+        <a class="nav-link d-inline text-dark me-3" href="/Usuario">Usuarios</a>
     </div>
+</nav>
 
-    <div class="col-md-4">
-        <div class="card dashboard-card">
-            <h5>👤 Usuarios</h5>
-            <p>Gestión de usuarios</p>
-            <a href="/Usuario/Create" class="btn btn-primary mb-3">
-                Usuarios
+<div class="container">
+
+    <h2 class="mb-4 fw-bold">Biblioteca</h2>
+    <div class="row text-center mb-5">
+
+        <div class="col-md-4">
+            <a href="/Libros/Create" class="card card-custom text-decoration-none">
+                <h4>Catálogo</h4>
+                <p>Gestión de libros</p>
             </a>
         </div>
+
+        <div class="col-md-4">
+            <a href="/Usuario/Create" class="card card-custom text-decoration-none">
+                <h4>Usuarios</h4>
+                <p>Gestión de usuarios</p>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a href="/Prestamo/Create" class="card card-custom text-decoration-none">
+                <h4>Préstamos</h4>
+                <p>Control de préstamos</p>
+            </a>
+        </div>
+
     </div>
-
-    <div class="col-md-4">
-        <div class="card dashboard-card">
-            <h5>🔄 Préstamo</h5>
-            <p>Control de préstamos</p>
-            <a href="/Prestamo/Create" class="btn btn-primary mb-3">
-                Nuevo Préstamo
-            </a>
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <div class="alert alert-light border">
+            @Model.Mensaje
         </div>
+    }
+    <div class="card p-4 shadow-sm border-0">
+        <div class="d-flex justify-content-between mb-3">
+            <h4 class="fw-bold">Libros registrados</h4>
+        </div>
+
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var libro in Model.Libros)
+                {
+                    <tr>
+                        <td>@libro.IdLibro</td>
+                        <td>@libro.Titulo</td>
+                        <td>@libro.Autor</td>
+                        <td>@libro.Cantidad</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 
 </div>
+<footer class="text-center p-3 mt-5 border-top">
+    © 2026 Sistema Bibliotecario
+</footer>

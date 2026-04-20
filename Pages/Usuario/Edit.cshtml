@@ -1,0 +1,13 @@
+﻿@page
+@model sistema_de_informacion_bibliotecaria_sib.Pages.Usuario.EditModel
+
+<h2>Editar Usuario</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Usuario.IdUsuario" />
+
+    <input asp-for="Usuario.Nombre" class="form-control mb-2" />
+    <input asp-for="Usuario.Apellido" class="form-control mb-2" />
+
+    <button class="btn btn-success">Actualizar</button>
+</form>

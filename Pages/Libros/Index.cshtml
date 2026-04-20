@@ -1,0 +1,32 @@
+﻿@page
+@model sistema_de_informacion_bibliotecaria_sib.Pages.Libros.IndexModel
+
+<h2>Libros</h2>
+
+<a href="/Libros/Create" class="btn btn-success mb-3">Agregar Libro</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var libro in Model.Libros)
+        {
+            <tr>
+                <td>@libro.IdLibro</td>
+                <td>@libro.Titulo</td>
+                <td>@libro.Autor</td>
+                <td>@libro.Cantidad</td>
+                <td>
+                    <a href="/Libros/Edit?id=@libro.IdLibro" class="btn btn-warning btn-sm">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
