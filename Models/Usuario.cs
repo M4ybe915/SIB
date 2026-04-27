@@ -32,10 +32,10 @@ namespace sistema_de_informacion_bibliotecaria_sib.Models
         [StringLength(20)]
         public string Carnet { get; set; } = string.Empty;
 
-        // Relación (1 usuario → muchos préstamos)
+       
         public ICollection<Prestamo> Prestamo { get; set; } = new List<Prestamo>();
 
-        // 🔥 Propiedad calculada
+       
         [Display(Name = "Nombre Completo")]
         public string NombreCompleto => $"{Nombre} {Apellido}";
 

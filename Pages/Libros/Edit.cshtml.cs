@@ -48,7 +48,7 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Libros
             }
         }
 
-        // 🔹 Guardar cambios
+        
         public IActionResult OnPost()
         {
             string conexion = _configuration.GetConnectionString("DefaultConnection");

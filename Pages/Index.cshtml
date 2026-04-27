@@ -1,77 +1,147 @@
 ﻿@page
 @model IndexModel
 
-<nav class="navbar navbar-light bg-white border-bottom px-4 mb-4">
-    <span class="navbar-brand fw-bold">Biblioteca SIB</span>
-
-    <div>
-        <a class="nav-link d-inline text-dark me-3" href="/Libros">Libros</a>
-        <a class="nav-link d-inline text-dark me-3" href="/Usuario">Usuarios</a>
+@{
+    ViewData["Title"] = "Biblioteca SIB";
+}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-3" href="/">
+            📘 Biblioteca SIB
+        </a>
+        <div>
+            <a class="nav-link d-inline text-white me-4 fw-semibold" href="/Libros">
+                📚 Libros
+            </a>
+            <a class="nav-link d-inline text-white me-4 fw-semibold" href="/Usuario">
+                👤 Usuarios
+            </a>
+            <a class="nav-link d-inline text-white fw-semibold" href="/Prestamo">
+                🔄 Prestamos
+            </a>
+        </div>
     </div>
 </nav>
+<div class="container mt-5">
+    <div class="text-center mb-5">
 
-<div class="container">
+        <h1 class="display-3 fw-bold text-primary">
+            Bienvenido a Biblioteca SIB
+        </h1>
 
-    <h2 class="mb-4 fw-bold">Biblioteca</h2>
-    <div class="row text-center mb-5">
-
-        <div class="col-md-4">
-            <a href="/Libros/Create" class="card card-custom text-decoration-none">
-                <h4>Catálogo</h4>
-                <p>Gestión de libros</p>
-            </a>
+       
         </div>
 
+        <hr class="w-50 mx-auto mt-5" />
+
+    </div>
+    <div class="row g-4 mb-5">
         <div class="col-md-4">
-            <a href="/Usuario/Create" class="card card-custom text-decoration-none">
-                <h4>Usuarios</h4>
-                <p>Gestión de usuarios</p>
+            <a href="/Libros/Create" class="text-decoration-none">
+                <div class="card shadow-lg border-0 rounded-4 h-100 p-4 text-center card-hover">
+                    <div class="fs-1 mb-3">📚</div>
+                    <h3 class="fw-bold text-primary"></h3>
+                    <p class="text-muted">
+                        Gestión completa del catálogo bibliográfico
+                    </p>
+                </div>
             </a>
         </div>
-
         <div class="col-md-4">
-            <a href="/Prestamo/Create" class="card card-custom text-decoration-none">
-                <h4>Préstamos</h4>
-                <p>Control de préstamos</p>
+            <a href="/Usuario/Create" class="text-decoration-none">
+                <div class="card shadow-lg border-0 rounded-4 h-100 p-4 text-center card-hover">
+                    <div class="fs-1 mb-3">👤</div>
+                    <h3 class="fw-bold text-primary">Usuarios</h3>
+                    <p class="text-muted">
+                        Registro y administración de lectores
+                    </p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/Prestamo/Create" class="text-decoration-none">
+                <div class="card shadow-lg border-0 rounded-4 h-100 p-4 text-center card-hover">
+                    <div class="fs-1 mb-3">🔄</div>
+                    <h3 class="fw-bold text-primary">Prestamos</h3>
+                    <p class="text-muted">
+                        Control de préstamos y devoluciones
+                    </p>
+                </div>
             </a>
         </div>
 
     </div>
     @if (!string.IsNullOrEmpty(Model.Mensaje))
     {
-        <div class="alert alert-light border">
-            @Model.Mensaje
+        <div class="alert alert-success shadow-sm rounded-4 border-0 mb-5">
+            ✅ @Model.Mensaje
         </div>
     }
-    <div class="card p-4 shadow-sm border-0">
-        <div class="d-flex justify-content-between mb-3">
-            <h4 class="fw-bold">Libros registrados</h4>
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header bg-primary text-white p-4 rounded-top-4">
+            <div class="d-flex justify-content-between align-items-center">
+
+                <h3 class="mb-0 fw-bold">
+                    📖 Libros Registrados
+                </h3>
+
+                <a href="/Libros/Create" class="btn btn-light">
+                    ➕ Agregar Libro
+                </a>
+
+            </div>
         </div>
 
-        <table class="table table-hover align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>ID</th>
-                    <th>Título</th>
-                    <th>Autor</th>
-                    <th>Cantidad</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var libro in Model.Libros)
-                {
-                    <tr>
-                        <td>@libro.IdLibro</td>
-                        <td>@libro.Titulo</td>
-                        <td>@libro.Autor</td>
-                        <td>@libro.Cantidad</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="card-body p-4">
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Autor</th>
+                            <th>Cantidad</th>
+                            <th class="text-center">Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var libro in Model.Libros)
+                        {
+                            <tr>
+                                <td>@libro.IdLibro</td>
+                                <td class="fw-semibold">@libro.Titulo</td>
+                                <td>@libro.Autor</td>
+                                <td>@libro.Cantidad</td>
+
+                                <td class="text-center">
+                                    <span class="badge bg-success px-3 py-2">
+                                        Disponible
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
     </div>
 
 </div>
-<footer class="text-center p-3 mt-5 border-top">
-    © 2026 Sistema Bibliotecario
+<footer class="text-center p-4 mt-5 border-top text-muted">
+    © 2026 Biblioteca SIB | Proyecto Universitario
 </footer>
+<style>
+    .card-hover {
+        transition: 0.3s;
+    }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+        }
+</style>

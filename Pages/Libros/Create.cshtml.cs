@@ -19,7 +19,7 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Libros
 
         public IActionResult OnPost()
         {
-            // 🔥 VALIDACIÓN
+            
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -27,7 +27,7 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Libros
 
             string conexion = _configuration.GetConnectionString("DefaultConnection");
 
-            using (var conn = new NpgsqlConnection(conexion))
+            using (var conn = new NpgsqlConnection(conexion)) 
             {
                 conn.Open();
 

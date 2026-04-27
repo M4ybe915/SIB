@@ -1,22 +1,120 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
-  margin-bottom: 60px;
+    background: linear-gradient( rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75) ), url('/images/Sib.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: rgba(31, 41, 55, 0.95) !important;
+    backdrop-filter: blur(5px);
+}
+
+.navbar-brand {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.nav-link {
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+    .nav-link:hover {
+        color: #60a5fa !important;
+    }
+
+h1 {
+    font-weight: 700;
+}
+
+.lead {
+    color: #4b5563;
+}
+.btn-primary {
+    background-color: #2563eb;
+    border: none;
+    border-radius: 10px;
+}
+
+    .btn-primary:hover {
+        background-color: #1d4ed8;
+    }
+
+.btn-outline-dark {
+    border-radius: 10px;
+}
+.card {
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.95);
+    transition: 0.3s;
+}
+
+.card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.10);
+}
+
+.card h3 {
+    font-weight: 700;
+}
+
+.card p {
+    font-size: 15px;
+}
+
+.alert {
+    border-radius: 15px;
+    font-size: 16px;
+    background: rgba(255,255,255,0.95);
+}
+
+.table {
+    margin-bottom: 0;
+    background: white;
+}
+
+    .table thead th {
+        font-weight: 700;
+        font-size: 15px;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f8fafc;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+.badge {
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+footer {
+    font-size: 14px;
+    color: #374151;
+    background: rgba(255,255,255,0.8);
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 22px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .btn-lg {
+        width: 100%;
+        margin-bottom: 10px;
+    }
 }

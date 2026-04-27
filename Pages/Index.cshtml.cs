@@ -11,7 +11,7 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages
 
         public string Mensaje { get; set; }
 
-        // 🔥 NUEVO: lista de libros
+        
         public List<Libro> Libros { get; set; } = new List<Libro>();
 
         public IndexModel(ILogger<IndexModel> logger)
@@ -30,7 +30,7 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages
                     conn.Open();
                     Mensaje = "Conexión exitosa 🚀";
 
-                    // 🔥 NUEVO: consulta de libros
+                    
                     string query = "SELECT IdLibro, Titulo, Autor, Cantidad FROM Libro";
 
                     using (var cmd = new NpgsqlCommand(query, conn))
@@ -56,7 +56,7 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages
         }
     }
 
-    // 🔥 NUEVO: clase Libro
+    
     public class Libro
     {
         public int IdLibro { get; set; }

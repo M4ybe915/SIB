@@ -1,0 +1,53 @@
+﻿@page
+@model sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo.IndexModel
+
+<h2>📚 Préstamos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Libro</th>
+            <th>Préstamo</th>
+            <th>Límite</th>
+            <th>Estado</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.Lista)
+        {
+            var vencido = p.FechaLimite < DateTime.Now && p.Estado == "Activo";
+
+            <tr class="@(vencido ? "table-danger" : "")">
+                <td>@p.IdPrestamo</td>
+                <td>@p.Usuario</td>
+                <td>@p.Libro</td>
+                <td>@p.FechaPrestamo.ToShortDateString()</td>
+                <td>@p.FechaLimite.ToShortDateString()</td>
+                <td>
+                    @if (p.Estado?.ToLower().Trim() == "devuelto")
+                    {
+                        <span class="badge bg-success">Devuelto</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning">Activo</span>
+                    }
+                </td>
+                <td>
+                    @if (p.Estado?.ToLower() == "activo")
+                    {
+                        <a asp-page="/Prestamo/Devolver"
+                           asp-route-id="@p.IdPrestamo"
+                           class="btn btn-success btn-sm"
+                           onclick="return confirm('¿Confirmar devolución?');">
+                            Devolver
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
