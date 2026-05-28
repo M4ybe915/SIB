@@ -16,17 +16,20 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
 
         public void OnGet()
         {
-            using var conn = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            using var conn = new NpgsqlConnection(
+                _configuration.GetConnectionString("DefaultConnection"));
+
             conn.Open();
 
-            string query = @"
-            SELECT p.IdPrestamo, p.FechaPrestamo, p.FechaLimite, p.Estado,
-                   u.Nombre, l.Titulo
-            FROM Prestamo p
-            JOIN Usuario u ON p.IdUsuario = u.IdUsuario
-            JOIN Libro l ON p.IdLibro = l.IdLibro";
+            using var cmd = new NpgsqlCommand(
+                "SELECT p.idprestamo, p.fechaprestamo, p.estado, " +
+                "u.idusuario, u.nombre, " +
+                "l.idlibro, l.titulo " +
+                "FROM prestamo p " +
+                "INNER JOIN usuario u ON p.idusuario = u.idusuario " +
+                "INNER JOIN libro l ON p.idlibro = l.idlibro",
+                conn);
 
-            using var cmd = new NpgsqlCommand(query, conn);
             using var reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -34,19 +37,25 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
                 Lista.Add(new PrestamoView
                 {
                     IdPrestamo = reader.GetInt32(0),
+
                     FechaPrestamo = reader.GetDateTime(1),
 
-                    FechaLimite = reader.IsDBNull(2)
-         ? DateTime.MinValue
-         : reader.GetDateTime(2),
+                    Estado = reader.IsDBNull(2)
+                        ? ""
+                        : reader.GetString(2),
 
-                    Estado = reader.IsDBNull(3)
-         ? ""
-         : reader.GetString(3),
+                    IdUsuario = reader.GetInt32(3),
 
-                    Usuario = reader.GetString(4),
-                    Libro = reader.GetString(5)
-            });
+                    Usuario = reader.IsDBNull(4)
+                        ? ""
+                        : reader.GetString(4),
+
+                    IdLibro = reader.GetInt32(5),
+
+                    Libro = reader.IsDBNull(6)
+                        ? ""
+                        : reader.GetString(6)
+                });
             }
         }
     }
@@ -54,10 +63,17 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
     public class PrestamoView
     {
         public int IdPrestamo { get; set; }
+
         public DateTime FechaPrestamo { get; set; }
-        public DateTime FechaLimite { get; set; }
+
         public string Estado { get; set; }
+
+        public int IdUsuario { get; set; }
+
         public string Usuario { get; set; }
+
+        public int IdLibro { get; set; }
+
         public string Libro { get; set; }
     }
 }

@@ -31,12 +31,12 @@ namespace sistema_de_informacion_bibliotecaria_sib.Models
 
         
         [Required(ErrorMessage = "Debe seleccionar un usuario")]
-        public int IdUsuario { get; set; }
-        public Usuario Usuario { get; set; }
+        public int Idusuario { get; set; }
+        public Usuario usuario { get; set; }
 
         
         [Required(ErrorMessage = "Debe seleccionar un libro")]
-        public int IdLibro { get; set; }
-        public Libro Libro { get; set; }
+        public int Idlibro { get; set; }
+        public Libro libro { get; set; }
     }
 }

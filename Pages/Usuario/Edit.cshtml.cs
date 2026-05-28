@@ -21,7 +21,9 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Usuario
             using var conn = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection"));
             conn.Open();
 
-            using var cmd = new NpgsqlCommand("SELECT IdUsuario, Nombre, Apellido FROM Usuario WHERE IdUsuario=@id", conn);
+            using var cmd = new NpgsqlCommand(
+                "SELECT idusuario, nombre, apellido FROM usuario WHERE idusuario=@id", conn);
+
             cmd.Parameters.AddWithValue("@id", id);
 
             using var reader = cmd.ExecuteReader();
@@ -42,7 +44,8 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Usuario
             using var conn = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection"));
             conn.Open();
 
-            using var cmd = new NpgsqlCommand("UPDATE Usuario SET Nombre=@n, Apellido=@a WHERE IdUsuario=@id", conn);
+            using var cmd = new NpgsqlCommand(
+                "UPDATE usuario SET nombre=@n, apellido=@a WHERE idusuario=@id", conn);
 
             cmd.Parameters.AddWithValue("@n", Usuario.Nombre);
             cmd.Parameters.AddWithValue("@a", Usuario.Apellido ?? "");

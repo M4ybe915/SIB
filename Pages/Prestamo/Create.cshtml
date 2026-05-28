@@ -11,7 +11,7 @@
         <label class="form-label">Usuario</label>
         <select asp-for="Prestamo.IdUsuario" class="form-control">
             <option value="">-- Seleccione un usuario --</option>
-            @foreach (var u in Model.Usuarios)
+            @foreach (var u in Model.usuarios)
             {
                 <option value="@u.IdUsuario">@u.Nombre</option>
             }
@@ -23,7 +23,7 @@
         <label class="form-label">Libro</label>
         <select asp-for="Prestamo.IdLibro" class="form-control">
             <option value="">-- Seleccione un libro --</option>
-            @foreach (var l in Model.Libros)
+            @foreach (var l in Model.libros)
             {
                 <option value="@l.IdLibro">
                     @l.Titulo (Disponibles: @l.Cantidad)

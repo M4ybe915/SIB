@@ -1,0 +1,67 @@
+﻿@page
+@model sistema_de_informacion_bibliotecaria_sib.Pages.Usuario.DeleteModel
+
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <!-- ENCABEZADO -->
+        <div class="card-header bg-danger text-white">
+            <h2 class="text-center mb-0">
+                🗑 Eliminar Usuario
+            </h2>
+        </div>
+
+        <!-- CONTENIDO -->
+        <div class="card-body">
+
+            <form method="post">
+
+                <!-- IMPORTANTE: este hidden envía el ID al OnPost -->
+                <input type="hidden" asp-for="Usuario.IdUsuario" />
+
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                <h4 class="text-center text-danger mb-4">
+                    ¿Seguro que deseas eliminar este usuario?
+                </h4>
+
+                <div class="alert alert-light border rounded-3">
+
+                    <p class="mb-2">
+                        <strong>Nombre:</strong>
+                        @Model.Usuario.Nombre
+                    </p>
+
+                    <p class="mb-0">
+                        <strong>Apellido:</strong>
+                        @Model.Usuario.Apellido
+                    </p>
+
+                </div>
+
+                <!-- BOTONES -->
+                <div class="text-center mt-4">
+
+                    <button type="submit"
+                            class="btn btn-danger btn-lg">
+                        Confirmar Eliminación
+                    </button>
+
+                    <a href="/Usuario"
+                       class="btn btn-secondary btn-lg">
+                        Cancelar
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

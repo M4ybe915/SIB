@@ -10,7 +10,7 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Usuario
         private readonly IConfiguration _configuration;
 
         [BindProperty]
-        public Usuario Usuario { get; set; }
+        public Usuarios Usuario { get; set; }
 
         public CreateModel(IConfiguration configuration)
         {
@@ -19,7 +19,6 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Usuario
 
         public IActionResult OnPost()
         {
-            
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -28,9 +27,10 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Usuario
             using var conn = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection"));
             conn.Open();
 
-            string query = "INSERT INTO Usuario (Nombre, Apellido) VALUES (@n, @a)";
+            string query = "INSERT INTO usuario (nombre, apellido) VALUES (@n, @a)";
 
             using var cmd = new NpgsqlCommand(query, conn);
+
             cmd.Parameters.AddWithValue("@n", Usuario.Nombre);
             cmd.Parameters.AddWithValue("@a", Usuario.Apellido);
 
@@ -40,7 +40,6 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Usuario
         }
     }
 
-    
     public class Usuarios
     {
         public int IdUsuario { get; set; }

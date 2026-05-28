@@ -20,16 +20,16 @@ public class BibliotecaContext : DbContext
 
         // 🔗 Relación: Prestamo → Usuario (muchos a uno)
         modelBuilder.Entity<Prestamo>()
-            .HasOne(p => p.Usuario)
+            .HasOne(p => p.usuario)
             .WithMany(u => u.Prestamos)
-            .HasForeignKey(p => p.IdUsuario)
+            .HasForeignKey(p => p.Idusuario)
             .OnDelete(DeleteBehavior.Restrict);
 
         // 🔗 Relación: Prestamo → Libro (muchos a uno)
         modelBuilder.Entity<Prestamo>()
-            .HasOne(p => p.Libro)
+            .HasOne(p => p.libro)
             .WithMany(l => l.Prestamo)
-            .HasForeignKey(p => p.IdLibro)
+            .HasForeignKey(p => p.Idlibro)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

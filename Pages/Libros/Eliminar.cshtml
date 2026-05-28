@@ -1,0 +1,72 @@
+﻿@page
+@model sistema_de_informacion_bibliotecaria_sib.Pages.Libros.EliminarModel
+
+@{
+    ViewData["Title"] = "Eliminar Libro";
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+
+        <div class="card-header bg-danger text-white">
+            <h2 class="text-center mb-0">
+                🗑 Eliminar Libro
+            </h2>
+        </div>
+
+
+        <div class="card-body">
+
+            <form method="post">
+
+
+                <input type="hidden" asp-for="Libro.IdLibro" />
+
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                <h4 class="text-center text-danger mb-4">
+                    ¿Seguro que deseas eliminar este libro?
+                </h4>
+
+                <div class="alert alert-light border rounded-3">
+
+                    <p class="mb-2">
+                        <strong>Título:</strong>
+                        @Model.Libro.Titulo
+                    </p>
+
+                    <p class="mb-2">
+                        <strong>Autor:</strong>
+                        @Model.Libro.Autor
+                    </p>
+
+                    <p class="mb-0">
+                        <strong>Cantidad:</strong>
+                        @Model.Libro.Cantidad
+                    </p>
+
+                </div>
+
+
+                <div class="text-center mt-4">
+
+                    <button type="submit"
+                            class="btn btn-danger btn-lg">
+                        Confirmar Eliminación
+                    </button>
+
+                    <a href="/Libros"
+                       class="btn btn-secondary btn-lg">
+                        Cancelar
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

@@ -20,7 +20,7 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Usuario
             using var conn = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection"));
             conn.Open();
 
-            string query = "SELECT IdUsuario, Nombre, Apellido FROM Usuario";
+            string query = "SELECT idusuario, nombre, apellido FROM usuario";
 
             using var cmd = new NpgsqlCommand(query, conn);
             using var reader = cmd.ExecuteReader();

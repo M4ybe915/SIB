@@ -20,31 +20,28 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
 
             int idLibro = 0;
 
-           
-            using (var cmd = new NpgsqlCommand("SELECT IdLibro FROM Prestamo WHERE IdPrestamo=@id", conn))
+            using (var cmd = new NpgsqlCommand(
+                "SELECT idlibro FROM prestamo WHERE idprestamo=@id", conn))
             {
                 cmd.Parameters.AddWithValue("@id", id);
                 idLibro = Convert.ToInt32(cmd.ExecuteScalar());
             }
 
-            
             using (var cmd = new NpgsqlCommand(
-                "UPDATE Prestamo SET Estado='Devuelto', FechaDevolucion=@f WHERE IdPrestamo=@id", conn))
+                "UPDATE prestamo SET estado='Devuelto' WHERE idprestamo=@id", conn))
             {
-                cmd.Parameters.AddWithValue("@f", DateTime.Now);
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.ExecuteNonQuery();
             }
 
-           
             using (var cmd = new NpgsqlCommand(
-                "UPDATE Libro SET Cantidad = Cantidad + 1 WHERE IdLibro=@id", conn))
+                "UPDATE libro SET cantidad = cantidad + 1 WHERE idlibro=@id", conn))
             {
                 cmd.Parameters.AddWithValue("@id", idLibro);
                 cmd.ExecuteNonQuery();
             }
 
-            return RedirectToPage("/Prestamo/Index");
+            return RedirectToPage("index");
         }
     }
 }

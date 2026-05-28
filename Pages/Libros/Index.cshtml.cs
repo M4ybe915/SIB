@@ -23,7 +23,7 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Libros
             {
                 conn.Open();
 
-                string query = "SELECT IdLibro, Titulo, Autor, Cantidad FROM Libro";
+                string query = "SELECT idlibro, titulo, autor, cantidad FROM libro";
 
                 using (var cmd = new NpgsqlCommand(query, conn))
                 using (var reader = cmd.ExecuteReader())
