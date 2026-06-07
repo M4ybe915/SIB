@@ -13,7 +13,7 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
         public List<Libro> libros { get; set; } = new();
 
         [BindProperty]
-        public Prestamo Prestamo { get; set; }
+        public Prestamo Prestamo { get; set; } = new();
 
         public CreateModel(IConfiguration configuration)
         {
@@ -22,10 +22,13 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
 
         public void OnGet()
         {
-            using var conn = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            using var conn = new NpgsqlConnection(
+                _configuration.GetConnectionString("DefaultConnection"));
+
             conn.Open();
 
-            using (var cmd = new NpgsqlCommand("SELECT idusuario, nombre FROM usuario", conn))
+            using (var cmd = new NpgsqlCommand(
+                "SELECT idusuario, nombre FROM usuario", conn))
             using (var reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
@@ -41,7 +44,8 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
             conn.Close();
             conn.Open();
 
-            using (var cmd = new NpgsqlCommand("SELECT idlibro, titulo, cantidad FROM libro", conn))
+            using (var cmd = new NpgsqlCommand(
+                "SELECT idlibro, titulo, cantidad FROM libro", conn))
             using (var reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
@@ -64,12 +68,15 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
                 return Page();
             }
 
-            using var conn = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            using var conn = new NpgsqlConnection(
+                _configuration.GetConnectionString("DefaultConnection"));
+
             conn.Open();
 
             int stock;
 
-            using (var cmd = new NpgsqlCommand("SELECT cantidad FROM libro WHERE idlibro=@id", conn))
+            using (var cmd = new NpgsqlCommand(
+                "SELECT cantidad FROM libro WHERE idlibro = @id", conn))
             {
                 cmd.Parameters.AddWithValue("@id", Prestamo.IdLibro);
                 stock = Convert.ToInt32(cmd.ExecuteScalar());
@@ -83,26 +90,40 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
             }
 
             DateTime hoy = DateTime.Now;
+            DateTime fechaLimite = hoy.AddDays(7);
+
+            Console.WriteLine("================================");
+            Console.WriteLine($"Fecha préstamo: {hoy}");
+            Console.WriteLine($"Fecha límite: {fechaLimite}");
+            Console.WriteLine("================================");
 
             using (var cmd = new NpgsqlCommand(
-                "INSERT INTO prestamo (fechaprestamo, estado, idusuario, idlibro) VALUES (@f, @e, @u, @l)", conn))
+                @"INSERT INTO prestamo
+                  (fechaprestamo, ""FechaLimite"", estado, idusuario, idlibro)
+                  VALUES
+                  (@f, @fl, @e, @u, @l)", conn))
             {
                 cmd.Parameters.AddWithValue("@f", hoy);
+                cmd.Parameters.AddWithValue("@fl", fechaLimite);
                 cmd.Parameters.AddWithValue("@e", "Activo");
                 cmd.Parameters.AddWithValue("@u", Prestamo.IdUsuario);
                 cmd.Parameters.AddWithValue("@l", Prestamo.IdLibro);
 
+                Console.WriteLine("Ejecutando INSERT...");
+
                 cmd.ExecuteNonQuery();
+
+                Console.WriteLine("INSERT ejecutado correctamente.");
             }
 
             using (var cmd = new NpgsqlCommand(
-                "UPDATE libro SET cantidad = cantidad - 1 WHERE idlibro=@id", conn))
+                "UPDATE libro SET cantidad = cantidad - 1 WHERE idlibro = @id", conn))
             {
                 cmd.Parameters.AddWithValue("@id", Prestamo.IdLibro);
                 cmd.ExecuteNonQuery();
             }
 
-            return RedirectToPage("index");
+            return RedirectToPage("Index");
         }
     }
 
@@ -120,13 +141,13 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
     public class Usuario
     {
         public int IdUsuario { get; set; }
-        public string Nombre { get; set; }
+        public string Nombre { get; set; } = "";
     }
 
     public class Libro
     {
         public int IdLibro { get; set; }
-        public string Titulo { get; set; }
+        public string Titulo { get; set; } = "";
         public int Cantidad { get; set; }
     }
 }

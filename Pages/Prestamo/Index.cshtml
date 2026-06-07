@@ -16,6 +16,8 @@
             <th>Préstamo</th>
             <th>Estado</th>
             <th>Acción</th>
+            <th>Fecha Límite</th>
+            <th>Fecha Devolución</th>
         </tr>
     </thead>
 
@@ -33,7 +35,7 @@
                 <td>@p.FechaPrestamo.ToShortDateString()</td>
 
                 <td>
-                    @if (p.Estado != null &&
+                    @if (!string.IsNullOrEmpty(p.Estado) &&
                                     p.Estado.ToLower().Trim() == "devuelto")
                     {
                         <span class="badge bg-success">
@@ -49,20 +51,31 @@
                 </td>
 
                 <td>
-                    @if (p.Estado == null ||
+                    @if (string.IsNullOrEmpty(p.Estado) ||
                                     p.Estado.ToLower() != "devuelto")
                     {
                         <a asp-page="/Prestamo/Devolver"
                            asp-route-id="@p.IdPrestamo"
                            class="btn btn-success btn-sm"
                            onclick="return confirm('¿Confirmar devolución?');">
-
                             Devolver
                         </a>
                     }
-                </td>
+            </td>
+
+            <td>
+                @(p.FechaLimite.HasValue
+                                ? p.FechaLimite.Value.ToShortDateString()
+                                : "-")
+                                  </td>
+
+            <td>
+                @(p.fechadevolucion.HasValue
+                                ? p.fechadevolucion.Value.ToShortDateString()
+                                : "-")
+            </td>
 
             </tr>
-        }
+                }
     </tbody>
 </table>

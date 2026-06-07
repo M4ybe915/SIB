@@ -22,12 +22,19 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
             conn.Open();
 
             using var cmd = new NpgsqlCommand(
-                "SELECT p.idprestamo, p.fechaprestamo, p.estado, " +
-                "u.idusuario, u.nombre, " +
-                "l.idlibro, l.titulo " +
-                "FROM prestamo p " +
-                "INNER JOIN usuario u ON p.idusuario = u.idusuario " +
-                "INNER JOIN libro l ON p.idlibro = l.idlibro",
+                @"SELECT
+                    p.idprestamo,
+                    p.fechaprestamo,
+                    p.estado,
+                    p.""FechaLimite"",
+                    p.fechadevolucion,
+                    u.idusuario,
+                    u.nombre,
+                    l.idlibro,
+                    l.titulo
+                  FROM prestamo p
+                  INNER JOIN usuario u ON p.idusuario = u.idusuario
+                  INNER JOIN libro l ON p.idlibro = l.idlibro",
                 conn);
 
             using var reader = cmd.ExecuteReader();
@@ -44,17 +51,25 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
                         ? ""
                         : reader.GetString(2),
 
-                    IdUsuario = reader.GetInt32(3),
+                    FechaLimite = reader.IsDBNull(3)
+                        ? null
+                        : reader.GetDateTime(3),
 
-                    Usuario = reader.IsDBNull(4)
+                    fechadevolucion = reader.IsDBNull(4)
+                        ? null
+                        : reader.GetDateTime(4),
+
+                    IdUsuario = reader.GetInt32(5),
+
+                    Usuario = reader.IsDBNull(6)
                         ? ""
-                        : reader.GetString(4),
+                        : reader.GetString(6),
 
-                    IdLibro = reader.GetInt32(5),
+                    IdLibro = reader.GetInt32(7),
 
-                    Libro = reader.IsDBNull(6)
+                    Libro = reader.IsDBNull(8)
                         ? ""
-                        : reader.GetString(6)
+                        : reader.GetString(8)
                 });
             }
         }
@@ -66,14 +81,18 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Prestamo
 
         public DateTime FechaPrestamo { get; set; }
 
-        public string Estado { get; set; }
+        public DateTime? FechaLimite { get; set; }
+
+        public DateTime? fechadevolucion { get; set; }
+
+        public string Estado { get; set; } = "";
 
         public int IdUsuario { get; set; }
 
-        public string Usuario { get; set; }
+        public string Usuario { get; set; } = "";
 
         public int IdLibro { get; set; }
 
-        public string Libro { get; set; }
+        public string Libro { get; set; } = "";
     }
 }
