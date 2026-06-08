@@ -22,7 +22,7 @@ namespace sistema_de_informacion_bibliotecaria_sib.Models
         
         [Display(Name = "Fecha de Devolución")]
         [DataType(DataType.Date)]
-        public DateTime? FechaDevolucion { get; set; }
+        public DateTime? fechadevolucion { get; set; }
 
        
         [Required(ErrorMessage = "El estado es obligatorio")]

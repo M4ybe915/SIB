@@ -19,6 +19,24 @@
         <span asp-validation-for="Usuario.Apellido" class="text-danger"></span>
     </div>
 
+    <div class="mb-3">
+        <label>Correo Electrónico</label>
+        <input asp-for="Usuario.Correo" class="form-control" type="email" />
+        <span asp-validation-for="Usuario.Correo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Teléfono</label>
+        <input asp-for="Usuario.Telefono" class="form-control" />
+        <span asp-validation-for="Usuario.Telefono" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Carnet</label>
+        <input asp-for="Usuario.Carnet" class="form-control" />
+        <span asp-validation-for="Usuario.Carnet" class="text-danger"></span>
+    </div>
+
     <button class="btn btn-primary">Guardar</button>
 
 </form>
