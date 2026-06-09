@@ -23,7 +23,9 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Libros
             {
                 conn.Open();
 
-                string query = "SELECT idlibro, titulo, autor, cantidad FROM libro";
+                string query = @"SELECT l.idlibro, l.titulo, l.autor, l.editorial, l.año, l.cantidad, c.nombre 
+                 FROM libro l 
+                 LEFT JOIN categoria c ON l.idcategoria = c.idcategoria";
 
                 using (var cmd = new NpgsqlCommand(query, conn))
                 using (var reader = cmd.ExecuteReader())
@@ -35,7 +37,10 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Libros
                             IdLibro = reader.GetInt32(0),
                             Titulo = reader.GetString(1),
                             Autor = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                            Cantidad = reader.GetInt32(3)
+                            Editorial = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                            Año = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
+                            Cantidad = reader.GetInt32(5),
+                            NombreCategoria = reader.IsDBNull(6) ? "Sin Categoria" : reader.GetString(6)
                         });
                     }
                 }
@@ -48,6 +53,9 @@ namespace sistema_de_informacion_bibliotecaria_sib.Pages.Libros
         public int IdLibro { get; set; }
         public string Titulo { get; set; }
         public string Autor { get; set; }
+        public string Editorial { get; set; }
+        public int Año { get; set; }
         public int Cantidad { get; set; }
+        public string NombreCategoria { get; set; }
     }
 }

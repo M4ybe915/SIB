@@ -11,7 +11,10 @@
             <th>ID</th>
             <th>Título</th>
             <th>Autor</th>
+            <th>Editorial</th>
+            <th>Año</th>
             <th>Cantidad</th>
+            <th>Categoría</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -22,12 +25,13 @@
                 <td>@libro.IdLibro</td>
                 <td>@libro.Titulo</td>
                 <td>@libro.Autor</td>
+                <td>@libro.Editorial</td>
+                <td>@libro.Año</td>
                 <td>@libro.Cantidad</td>
+                <td>@libro.NombreCategoria</td>
                 <td>
                     <a href="/Libros/Edit?id=@libro.IdLibro" class="btn btn-warning btn-sm">Editar</a>
-
-                    <a href="/Libros/Eliminar?id=@libro.IdLibro"
-                       class="btn btn-danger btn-sm">
+                    <a href="/Libros/Eliminar?id=@libro.IdLibro" class="btn btn-danger btn-sm">
                         🗑 Eliminar
                     </a>
                 </td>
@@ -35,3 +39,4 @@
         }
     </tbody>
 </table>
+

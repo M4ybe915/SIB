@@ -7,75 +7,156 @@
     Nuevo Préstamo
 </a>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Usuario</th>
-            <th>Libro</th>
-            <th>Préstamo</th>
-            <th>Estado</th>
-            <th>Acción</th>
-            <th>Fecha Límite</th>
-            <th>Fecha Devolución</th>
-        </tr>
-    </thead>
+<div class="table-responsive">
 
-    <tbody>
-        @foreach (var p in Model.Lista)
-        {
+    <table class="table table-bordered table-hover align-middle">
+
+        <thead class="table-light">
+
             <tr>
-
-                <td>@p.IdPrestamo</td>
-
-                <td>@p.Usuario</td>
-
-                <td>@p.Libro</td>
-
-                <td>@p.FechaPrestamo.ToShortDateString()</td>
-
-                <td>
-                    @if (!string.IsNullOrEmpty(p.Estado) &&
-                                    p.Estado.ToLower().Trim() == "devuelto")
-                    {
-                        <span class="badge bg-success">
-                            Devuelto
-                        </span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-warning text-dark">
-                            Activo
-                        </span>
-                    }
-                </td>
-
-                <td>
-                    @if (string.IsNullOrEmpty(p.Estado) ||
-                                    p.Estado.ToLower() != "devuelto")
-                    {
-                        <a asp-page="/Prestamo/Devolver"
-                           asp-route-id="@p.IdPrestamo"
-                           class="btn btn-success btn-sm"
-                           onclick="return confirm('¿Confirmar devolución?');">
-                            Devolver
-                        </a>
-                    }
-            </td>
-
-            <td>
-                @(p.FechaLimite.HasValue
-                                ? p.FechaLimite.Value.ToShortDateString()
-                                : "-")
-                                  </td>
-
-            <td>
-                @(p.fechadevolucion.HasValue
-                                ? p.fechadevolucion.Value.ToShortDateString()
-                                : "-")
-            </td>
-
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Libro</th>
+                <th>Fecha Préstamo</th>
+                <th>Estado</th>
+                <th>Días Retraso</th>
+                <th>Multa</th>
+                <th>Acción</th>
+                <th>Fecha Límite</th>
+                <th>Fecha Devolución</th>
             </tr>
-                }
-    </tbody>
-</table>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var p in Model.Lista)
+            {
+                bool devuelto = p.fechadevolucion.HasValue;
+
+                bool retrasado =
+                !devuelto &&
+                p.FechaLimite.HasValue &&
+                DateTime.Today > p.FechaLimite.Value;
+
+                int diasRetraso =
+                retrasado
+                ? (DateTime.Today - p.FechaLimite.Value).Days
+                : 0;
+
+                decimal multaPorDia = 0.25m;
+                decimal multa = diasRetraso * multaPorDia;
+
+
+
+                <tr class="@(retrasado ? "table-danger" : "")">
+
+                    <td>@p.IdPrestamo</td>
+
+                    <td>@p.Usuario</td>
+
+                    <td>@p.Libro</td>
+
+                    <td>
+                        @p.FechaPrestamo.ToString("dd/MM/yyyy")
+                    </td>
+
+                    <td>
+
+                        @if (devuelto)
+                        {
+                            <span class="badge bg-success">
+                                Devuelto
+                            </span>
+                        }
+                        else if (retrasado)
+                        {
+                            <span class="badge bg-danger">
+                                Retrasado
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Activo
+                            </span>
+                        }
+
+                    </td>
+
+                    <td>
+
+                        @if (retrasado)
+                        {
+                            <span class="fw-bold text-danger">
+                                @diasRetraso día(s)
+                            </span>
+                        }
+                        else
+                        {
+                            <span>-</span>
+                        }
+
+                    </td>
+
+                    <td>
+
+                        @if (multa > 0)
+                        {
+                            <span class="fw-bold text-danger">
+                                $@multa.ToString("0.00")
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="text-success">
+                                $0.00
+                            </span>
+                        }
+
+                    </td>
+
+                    <td>
+
+                        @if (!devuelto)
+                        {
+                            <a asp-page="/Prestamo/Devolver"
+                               asp-route-id="@p.IdPrestamo"
+                               class="btn btn-success btn-sm"
+                               onclick="return confirm('¿Confirmar devolución?');">
+                                Devolver
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                Completado
+                            </span>
+                        }
+
+                    </td>
+
+                    <td>
+
+                        @(p.FechaLimite.HasValue
+                                            ? p.FechaLimite.Value.ToString("dd/MM/yyyy")
+                                            : "-")
+
+                    </td>
+
+                    <td>
+
+                        @(p.fechadevolucion.HasValue
+                                            ? p.fechadevolucion.Value.ToString("dd/MM/yyyy")
+                                            : "-")
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

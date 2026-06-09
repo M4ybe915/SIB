@@ -1,28 +1,48 @@
 ﻿@page
 @model sistema_de_informacion_bibliotecaria_sib.Pages.Libros.CreateModel
 
-<h2>Categoria</h2>
+<h2>Registrar Nuevo Libro</h2>
 
 <form method="post">
 
-    <div asp-validation-summary="All" class="text-danger"></div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="mb-3">
-        <label>Título</label>
-        <input asp-for="Libro.Titulo" class="form-control" />
-        <span asp-validation-for="Libro.Titulo" class="text-danger"></span>
+        <label asp-for="NuevoLibro.Titulo" class="form-label">Título</label>
+        <input asp-for="NuevoLibro.Titulo" class="form-control" />
+        <span asp-validation-for="NuevoLibro.Titulo" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label>Autor</label>
-        <input asp-for="Libro.Autor" class="form-control" />
-        <span asp-validation-for="Libro.Autor" class="text-danger"></span>
+        <label asp-for="NuevoLibro.Autor" class="form-label">Autor</label>
+        <input asp-for="NuevoLibro.Autor" class="form-control" />
+        <span asp-validation-for="NuevoLibro.Autor" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label>Cantidad</label>
-        <input asp-for="Libro.Cantidad" type="number" class="form-control" />
-        <span asp-validation-for="Libro.Cantidad" class="text-danger"></span>
+        <label asp-for="NuevoLibro.Editorial" class="form-label">Editorial</label>
+        <input asp-for="NuevoLibro.Editorial" class="form-control" />
+        <span asp-validation-for="NuevoLibro.Editorial" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NuevoLibro.Año" class="form-label">Año de Publicación</label>
+        <input asp-for="NuevoLibro.Año" type="number" class="form-control" />
+        <span asp-validation-for="NuevoLibro.Año" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NuevoLibro.Cantidad" class="form-label">Cantidad</label>
+        <input asp-for="NuevoLibro.Cantidad" type="number" class="form-control" />
+        <span asp-validation-for="NuevoLibro.Cantidad" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NuevoLibro.Idcategoria" class="form-label">Categoría</label>
+        <select asp-for="NuevoLibro.Idcategoria" asp-items="Model.ListaCategorias" class="form-select">
+            <option value="">Seleccione una categoría...</option>
+        </select>
+        <span asp-validation-for="NuevoLibro.Idcategoria" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Guardar</button>
